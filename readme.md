@@ -10,6 +10,8 @@ It is important that this tools does not download perse the files, it is using [
 
 You'll need to install it first. Also youll need ffmpeg instaled to be able to convert the files to mp3.
 
+> This will try to download the files using 320kbps audio quality
+
 Also node@20+ is needed.
 
 # Install
@@ -48,7 +50,7 @@ There you'll be asked to confirm the album, artist and artwork. You can press "y
 
 You can press `ctrl+c` anytime to cancel the tag process.
 
-If the tagger breaks you can simply run it stand alone as
+If the tagger breaks or if you downloaded your mp3 from other source. You can simply run it stand alone as
 
 ```bash
 tagger your_file.mp3
