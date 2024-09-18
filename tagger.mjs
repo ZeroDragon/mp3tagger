@@ -80,6 +80,7 @@ export const tagger = async (song) => {
       return result.trackName.toLowerCase() === song.title.toLowerCase() &&
         result.artistName.toLowerCase() === song.artist.toLowerCase()
     })
+    .filter(result => result.collectionName)
     .slice(0, 10)
     .map(result => {
       const albumUrl = result.artworkUrl100.replace('100x100', '600x600')
@@ -98,7 +99,18 @@ export const tagger = async (song) => {
     console.log('No tag results found for the given song'.red)
     process.exit(1)
   }
-  const data = await verifyResults(candidates)
+  console.clear()
+  console.log('Metadata options:')
+  candidates.forEach((candidate, index) => {
+    console.log(`${index + 1}. ${candidate.title.magenta} by ${candidate.artist.green} from album ${candidate.album.cyan}`)
+  })
+  const response = await askUser('Select song number to tag (ctrl+c to abort)/p(preview): ')
+  let data
+  if (response === 'p') {
+    data = await verifyResults(candidates)
+  } else {
+    data = candidates[response - 1]
+  }
   data.image = {
     description: 'Album Art',
     imageBuffer: await fetchAlbumArt(data.artwork),
@@ -111,6 +123,7 @@ export const tagger = async (song) => {
   delete data.artwork
 
   NodeID3.write(data, `${song.title} - ${song.artist}.mp3`)
+  console.clear()
 }
 
 const pathToThisFile = resolve(fileURLToPath(import.meta.url))

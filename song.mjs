@@ -6,22 +6,28 @@ import 'consolecolors'
 
 const [...query] = process.argv.slice(2)
 
-const songs = await ytMusic.searchMusics(`${query.join(' ')}`)
-const song = {
-  title: songs[0].title,
-  artist: songs[0].artists[0].name,
-  id: songs[0].youtubeId
-}
+const songs = (await ytMusic.searchMusics(`${query.join(' ')}`))
+  .map(song => {
+    return {
+      title: song.title,
+      artist: song.artists[0].name,
+      album: song.album,
+      id: song.youtubeId
+    }
+  })
+  .slice(0, 5)
+console.log('Found songs:')
+songs.forEach((song, index) => {
+  console.log(`${index + 1}. ${song.title.magenta} by ${song.artist.green} from album ${song.album.cyan}`)
+})
 
-console.log(`Found song ${song.title.magenta} by ${song.artist.green}`)
+const response = await askUser('Select song number to download (ctrl+c to abort): ')
+const song = songs[response - 1]
 
-const response = await askUser('Is this the correct song? (y/n): ')
-if (response !== 'y') {
-  console.log('Process aborted'.red)
-  process.exit(0)
-}
+song.title = song.title.replace(/"/g, '')
+song.artist = song.artist.replace(/"/g, '')
 
-const downloadCommand = `yt-dlp -x --audio-format mp3 --audio-quality 320k -o "${song.title} - ${song.artist}.%(ext)s" https://www.youtube.com/watch\?v\=${song.id}`
+const downloadCommand = `yt-dlp -x --audio-format mp3 --audio-quality 128k -o "${song.title} - ${song.artist}.%(ext)s" https://www.youtube.com/watch\?v\=${song.id}`
 
 console.log('Downloading song...'.blue)
 await new Promise(resolve => {

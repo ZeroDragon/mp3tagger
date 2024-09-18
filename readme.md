@@ -36,7 +36,7 @@ Process will ask you to confirm download.
 
 > You don't have to be very specific into your search.
 
-If that is not the right song, just answer "n" and the process will be terminated to try again.
+You'll see a list of 5 songs that matched your request, just select the number of the result you want (or ctrl+c to cancel)
 
 ![screen1](./0001.png)  
 
@@ -44,9 +44,13 @@ After downloading, it will try to get the correct meta tags from itunes free API
 
 ![screen1](./0002.png)  
 
-There you'll be asked to confirm the album, artist and artwork. You can press "y" (yes) to confirm, "n" (no/next) to get next option or "p" (prev) for the previous option.
+There you'll be asked to confirm the album, artist and artwork. If the data is correct just select the number of the option.
 
 ![screen1](./0003.png)  
+
+You can also press "p" to preview the results. From there just press "y" (yes) to confirm, "n" (no/next) to get next option or "p" (prev) for the previous option.
+
+![screen1](./0004.png)  
 
 You can press `ctrl+c` anytime to cancel the tag process.
 
@@ -64,4 +68,4 @@ Sometimes the tag process breaks, could be mainly for three reasons:
 
 By any of both methods once finished, you should have your song like this:
 
-![screen1](./0004.png)  
+![screen1](./0005.png)  
